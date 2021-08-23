@@ -367,3 +367,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 *.filters
+/SpecialCourse/test.cpp
+/SpecialCourse/Implement_Stack.cpp
