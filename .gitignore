@@ -371,3 +371,6 @@ FodyWeavers.xsd
 /SpecialCourse/Implement_Stack.cpp
 /SpecialCourse/Implemetation.cpp
 /SpecialCourse/Implement_Rabin_Karp.cpp
+
+# Ignore .exe that is generated when compile c/c++ files
+*.exe
