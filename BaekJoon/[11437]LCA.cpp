@@ -1,21 +1,21 @@
 #include<iostream>
-#include<queue>
 #include<vector>
 using namespace std;
 
-vector<vector<int>> input(51000);
 vector<int> tree(51000);
-// ÇØ´ç ³ëµåÀÇ ±íÀÌ¸¦ ¹İÈ¯
+
+// í•´ë‹¹ ë…¸ë“œì˜ ê¹Šì´ë¥¼ ë°˜í™˜
 int getDepth(int value) {
 	int depth = 1;
 	int current = value;
 	while (current != 1) {
-		current = tree[current];
+		current = tree[value];
 		depth++;
 	}
 	return depth;
 }
-// ÇØ´ç ³ëµå ±âÁØÀ¸·Î ¸ñÇ¥ ±íÀÌÀÇ ºÎ¸ğ ³ëµå¸¦ ¹İÈ¯
+
+// í•´ë‹¹ ë…¸ë“œ ê¸°ì¤€ìœ¼ë¡œ ëª©í‘œ ê¹Šì´ì˜ ë¶€ëª¨ ë…¸ë“œë¥¼ ë°˜í™˜
 int getNode(int depth, int value, int targetDepth) {
 	while (depth != targetDepth) {
 		value = tree[value];
@@ -23,7 +23,7 @@ int getNode(int depth, int value, int targetDepth) {
 	}
 	return value;
 }
-// µÎ ³ëµåÀÇ °øÅë ºÎ¸ğ¸¦ ¹İÈ¯
+// ë‘ ë…¸ë“œì˜ ê³µí†µ ë¶€ëª¨ë¥¼ ë°˜í™˜
 int getCommonParent(int first, int second) {
 	while (first != second) {
 		first = tree[first];
@@ -34,35 +34,15 @@ int getCommonParent(int first, int second) {
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
-	queue<int> Q;
 	int N, parent, child;
 	cin >> N;
-	for (int i = 0; i < N - 1; i++) {
+	for (int i = 0; i <= N; i++) {
+		tree[i] = i;
+	}
+	for (int i = 0; i < N-1; i++) {
 		cin >> parent >> child;
-		input[child].push_back(parent);
-		input[parent].push_back(child);
+		tree[child] = parent;
 	}
-
-	// 1(·çÆ®)¿¡ ¿¬°áµÈ ³ëµåÀÇ ºÎ¸ğ¸¦ ÁöÁ¤
-	for (int i = 0; i < input[1].size(); i++) {
-		child = input[1][i];
-		tree[child] = 1;
-		Q.push(child);
-	}
-	int current;
-	// 1(·çÆ®)¿¡ ¿¬°áµÈ ³ëµåµéÀ» Å½»öÇÏ¸é¼­ ºÎ¸ğ ³ëµå ÁöÁ¤
-	while (!Q.empty()) {
-		current = Q.front();
-		parent = tree[current];
-		Q.pop();
-		for (int j = 0; j < input[current].size(); j++) {
-			child = input[current][j];
-			if (child == parent) continue;
-			tree[child] = current;
-			Q.push(child);
-		}
-	}
-
 	int M, first, second;
 	int firstDepth, secondDepth;
 	cin >> M;
