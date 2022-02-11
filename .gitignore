@@ -374,3 +374,8 @@ FodyWeavers.xsd
 
 # Ignore .exe that is generated when compile c/c++ files
 *.exe
+
+# json files to compile c/c++ files in vscode
+launch.json
+tasks.json
+c_cpp_properties.json
