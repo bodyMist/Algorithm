@@ -1,25 +1,31 @@
-from collections import deque
 
 target = str(input())
 explosion = str(input())
-lenTarget = len(target);
-lenEx = len(explosion)
+lenTarget = int(len(target))
+lenEx = int(len(explosion))
 
-## stack에 넣다가 explosion의 마지막 문자가 입력되면
-## explosion의 길이만큼 빼서 검사
-## 맞으면 없애고, 아니면 다시 넣기
-## stack의 size가 explosion의 길이보다 적다면 그냥 continue
+stack = []
+output = []
+index = 0
+for i in range(0,lenTarget):
+  if(explosion.find(target[i]) == -1):
+    output += stack
+    output += target[i]
+    stack.clear();
+    index = 0
+  else:
+    stack += target[i]
+    index += 1
 
+  if(len(stack) >= lenEx and explosion[lenEx-1] == stack[-1]):
+    temp = stack[:index-lenEx]
+    stack.clear()
+    stack = temp
+    index -= lenEx
 
-index = 0;
+output+=stack
 
-while(True):
-  if(target.find(explosion) == -1):
-    break
-  target = target.replace(explosion, "")
-
-
-if(target == ""):
+if(len(output)==0):
   print("FRULA")
 else:
-  print(target)
+  print(''.join(output))
