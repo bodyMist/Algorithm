@@ -1,31 +1,21 @@
+import sys
+input = sys.stdin.readline
+print = sys.stdout.write
 
-target = str(input())
-explosion = str(input())
-lenTarget = int(len(target))
-lenEx = int(len(explosion))
-
+target = input().rstrip()
+explosion = input().rstrip()
+lenTarget = len(target)
+lenEx = len(explosion)
+explosionEnd = explosion[-1]
 stack = []
-output = []
-index = 0
-for i in range(0,lenTarget):
-  if(explosion.find(target[i]) == -1):
-    output += stack
-    output += target[i]
-    stack.clear();
-    index = 0
-  else:
-    stack += target[i]
-    index += 1
 
-  if(len(stack) >= lenEx and explosion[lenEx-1] == stack[-1]):
-    temp = stack[:index-lenEx]
-    stack.clear()
-    stack = temp
-    index -= lenEx
+for word in target:
+  stack.append(word)
+  if(word == explosionEnd and ''.join(stack[-lenEx:]) == explosion):
+    for _ in range(lenEx):
+      stack.pop()
 
-output+=stack
-
-if(len(output)==0):
-  print("FRULA")
+if stack:
+  print(f"{''.join(stack)}\n")
 else:
-  print(''.join(output))
+  print("FRULA")
