@@ -6,37 +6,42 @@ using namespace std;
 class Trie{
   public:
     bool isEnd;
-    Trie *phone[10];
+    Trie *phone[20];
     void insert(char* input);
     bool find(char* target);
     Trie(){
-      for(int i = 0; i < 10; i++){
+      for(int i = 0; i < 20; i++){
         isEnd = false;
         phone[i] = NULL;
       }
     }
 };
+
 void Trie::insert(char* input){
   if(*input == NULL){
-    isEnd = true;
+    this->isEnd = true;
     return;
   }
   int current = *input - '0';
   if(phone[current] == NULL){
     phone[current] = new Trie();
-    isEnd = false;
   }
   phone[current]->insert(input+1);
 }
+
 bool Trie::find(char* target){
   if(*target == NULL){
+    for(int p = 0; p < 10; p++){
+      if(phone[p] != NULL)
+        return true;
+    }
     if(isEnd) return false;
     return true;
   }
   int current = *target - '0';
   if(phone[current] == NULL)
     return false;
-  phone[current]->find(target+1);
+  return phone[current]->find(target+1);
 }
 
 
