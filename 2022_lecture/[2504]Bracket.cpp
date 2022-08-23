@@ -22,19 +22,21 @@ int main(){
         break;
 
       case ')':
-        if(s.top() == '('){
-          s.pop();
+        if (input[i - 1] == '(') {
           result += temp;
-          temp /= 2;
         }
+        if(!s.empty() && s.top() == '(')
+          s.pop();
+        temp /= 2;
         break;
 
       case ']':
-        if(s.top() == '['){
-          s.pop();
-          result += temp; 
-          temp /= 3;
+        if (input[i - 1] == '[') {
+          result += temp;
         }
+        if(!s.empty() && s.top() == '[')
+          s.pop();
+        temp /= 3;
         break;
     }
   }
