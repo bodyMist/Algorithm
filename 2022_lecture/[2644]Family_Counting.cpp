@@ -4,6 +4,7 @@
 using namespace std;
 
 vector<vector<int>> graph(105);
+int weight[105];
 int visited[105];
 
 int n, targetX, targetY, m, result;
@@ -18,11 +19,10 @@ void bfs(int start){
     result++;
     for(int i = 0; i < graph[current].size(); i++){
       int next = graph[current][i];
-      if(next == targetY)
-        return;
       if(!visited[next]){
         q.push(next);
         visited[next] = 1;
+        weight[next] = weight[current] + 1;
       }
     }
   }
@@ -36,6 +36,6 @@ int main(){
     graph[b].push_back(a);
   }
   bfs(targetX);
-  cout << result;
+  cout << (weight[targetY] != 0 ? weight[targetY] : -1);
   return 0;
 }
