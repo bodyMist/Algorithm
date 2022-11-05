@@ -1,40 +1,41 @@
-#include<iostream>
-#include<string>
-#include<stack>
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
 using namespace std;
-char sentence[60];
 
-int plus(int a, int b) {}
+vector<string> split(string input, char token) {
+  vector<string> result;
+  int prior = 0, current = 0;
+  current = input.find(token);
+
+  while (current != string::npos) {
+    string sub = input.substr(prior, current - prior);
+    prior = current + 1;
+    current = input.find(token, prior);
+    result.push_back(sub);
+  }
+  result.push_back(input.substr(prior, current - prior));
+  return result;
+}
 
 int main() {
-	string input;
-	char word;
-	stack<char> oper;
-	stack<int> operand;
-
-	getline(cin, input);
-	strcpy(sentence, input.c_str());
-	int length = strlen(sentence);
-	int index = 0, numberCount = 1, number = 0;
-
-	while (sentence[index] != '\0') {
-		if (sentence[index] == '+') {
-			// '+'연산자가 입력될 때
-			// 연산자 스택에 push
-			oper.push(sentence[index]);
-		}
-		else if (sentence[index] == '-') {
-			// '-'연산자가 입력될 때, 연산자 스택이 비어있다면 push
-			// 연산자 스택에 '-'가 있다면 연산자 스택을 비우고
-			// 피연산자 스택에서 값을 꺼내어 현재 계산값에서 빼기
-			if (oper.empty())	oper.push(sentence[index]);
-			else if(oper.top() == '-')
-
-		}else if (48 <= word <= 57) {
-			// 숫자가 입력될때 
-		}
-			
-
-	}
-
+  string input;
+  getline(cin, input);
+  vector<string> splitResult = split(input, '-');
+  vector<int> token;
+  for (string t : splitResult) {
+    vector<string> plus = split(t, '+');
+    int plusSum = 0;
+    for (string k : plus) {
+      plusSum += stoi(k);
+    }
+    token.push_back(plusSum);
+  }
+  int result = token[0];
+  for (int i = 1; i < token.size(); i++) {
+    result -= token[i];
+  }
+  cout << result;
+  return 0;
 }
